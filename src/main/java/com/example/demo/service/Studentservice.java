@@ -16,6 +16,10 @@ public Collection<Studententity> getAll(){
     return details.values();
 }
 public StudentEntity getById(int id){
-    
+    return details.get(id);
+}
+public Studententity update(int id,Studententity st){
+    details.put(id,st);
+    return st;
 }
 }
