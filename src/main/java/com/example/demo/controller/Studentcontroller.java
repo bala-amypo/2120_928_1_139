@@ -3,4 +3,18 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.Studententity;
-import com.
+import com.example.demo.services.Studentservice;
+@RestController
+@RequestMapping("/student")
+public class Studentcontroller{
+    @Autowired
+    private Studentservice ser;
+    @PostMapping("/add")
+    public Studententity addStudent(@RequestBody Studententity st){
+        return ser.saveData(st);
+    }
+    @GetMapping("/getall")
+    public Collection<Studententity>getAllStudents(){
+        
+    }
+}
