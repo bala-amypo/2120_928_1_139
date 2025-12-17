@@ -12,5 +12,10 @@ public Studententity saveData(Studententity st){
     details.put(st.getId(),st);
     return st;
 }
-public Collection<S
+public Collection<Studententity> getAll(){
+    return details.values();
+}
+public StudentEntity getById(int id){
+    
+}
 }
