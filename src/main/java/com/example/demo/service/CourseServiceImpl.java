@@ -1,1 +1,26 @@
-fyh
+package com.example.demo.service;
+
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+import com.example.demo.entity.Course;
+import com.example.demo.repository.CourseRepository;
+
+
+@Service
+public class CourseServiceImpl implements CourseService {
+
+
+private final CourseRepository repo;
+
+
+public CourseServiceImpl(CourseRepository repo) {
+this.repo = repo;
+}
+
+
+public Course save(Course c) { return repo.save(c); }
+public Course get(Long id) { return repo.findById(id).orElseThrow(); }
+public List<Course> getAll() { return repo.findAll(); }
+public void delete(Long id) { repo.deleteById(id); }
+}
