@@ -22,7 +22,7 @@ this.service = service;
 
 
 @PostMapping
-public Course create(@RequestBody Course c) {
+public Course create(@Valid @RequestBody Course c) {
 return service.save(c);
 }
 

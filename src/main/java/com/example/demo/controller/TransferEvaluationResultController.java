@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.TransferEvaluationResult;
@@ -21,7 +22,7 @@ this.service = service;
 
 
 @PostMapping
-public TransferEvaluationResult create(@RequestBody TransferEvaluationResult r) {
+public TransferEvaluationResult create(@Valid @RequestBody TransferEvaluationResult r) {
 return service.save(r);
 }
 

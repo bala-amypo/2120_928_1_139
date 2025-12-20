@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.University;
@@ -17,7 +18,7 @@ public UniversityController(UniversityService service) { this.service = service;
 
 
 @PostMapping
-public University create(@RequestBody University u) { return service.save(u); }
+public University create(@Valid @RequestBody University u) { return service.save(u); }
 
 
 @GetMapping("/{id}")
