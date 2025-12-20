@@ -21,7 +21,7 @@ this.service = service;
 
 
 @PostMapping
-public User create(@RequestBody User u) {
+public User create(@Valid @RequestBody User u) {
 return service.save(u);
 }
 
