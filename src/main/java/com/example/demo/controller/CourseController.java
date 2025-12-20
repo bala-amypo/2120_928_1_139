@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.Course;

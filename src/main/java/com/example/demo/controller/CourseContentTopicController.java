@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.CourseContentTopic;
@@ -21,7 +22,7 @@ this.service = service;
 
 
 @PostMapping
-public CourseContentTopic create(@RequestBody CourseContentTopic t) {
+public CourseContentTopic create(@Valid @RequestBody CourseContentTopic t) {
 return service.save(t);
 }
 
