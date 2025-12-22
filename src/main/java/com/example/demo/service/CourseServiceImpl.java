@@ -21,7 +21,6 @@ public class CourseServiceImpl implements CourseService {
         return repo.save(c);
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public Course get(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
@@ -32,7 +31,6 @@ public class CourseServiceImpl implements CourseService {
         return repo.findAll();
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public void delete(Long id) {
 
         Course course = repo.findById(id)

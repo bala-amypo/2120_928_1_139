@@ -21,7 +21,6 @@ public class TransferEvaluationResultServiceImpl implements TransferEvaluationRe
         return repo.save(r);
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public TransferEvaluationResult get(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
@@ -32,7 +31,6 @@ public class TransferEvaluationResultServiceImpl implements TransferEvaluationRe
         return repo.findAll();
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public void delete(Long id) {
 
         TransferEvaluationResult result = repo.findById(id)

@@ -21,7 +21,7 @@ public class TransferRuleServiceImpl implements TransferRuleService {
         return repo.save(r);
     }
 
-    // ❗ EXCEPTION ADDED HERE
+  
     public TransferRule get(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
@@ -32,7 +32,6 @@ public class TransferRuleServiceImpl implements TransferRuleService {
         return repo.findAll();
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public void delete(Long id) {
 
         TransferRule rule = repo.findById(id)

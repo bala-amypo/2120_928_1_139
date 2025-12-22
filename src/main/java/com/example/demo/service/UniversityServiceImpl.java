@@ -21,7 +21,7 @@ public class UniversityServiceImpl implements UniversityService {
         return repo.save(u);
     }
 
-    // ❗ EXCEPTION HANDLING
+  
     public University get(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
@@ -32,7 +32,6 @@ public class UniversityServiceImpl implements UniversityService {
         return repo.findAll();
     }
 
-    // ❗ EXCEPTION HANDLING
     public void delete(Long id) {
 
         University university = repo.findById(id)

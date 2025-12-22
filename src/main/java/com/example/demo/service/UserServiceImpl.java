@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
         return repo.save(u);
     }
 
-    // ❗ EXCEPTION HANDLING
     public User get(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
@@ -32,7 +31,6 @@ public class UserServiceImpl implements UserService {
         return repo.findAll();
     }
 
-    // ❗ EXCEPTION HANDLING
     public void delete(Long id) {
 
         User user = repo.findById(id)
