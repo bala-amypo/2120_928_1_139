@@ -20,7 +20,7 @@ public class SwaggerConfig {
                         .description("CRUD APIs for University Course Transfer System")
                 )
                 .servers(List.of(
-                        new Server().url("https://9495.pro604cr.amypo.ai/")
+                        new Server().url("https://9265.pro604cr.amypo.ai/")
                 ));
     }
 }
