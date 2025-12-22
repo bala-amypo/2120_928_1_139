@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
+import com.example.demo.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*") 
 public class UserController {
 
     private final UserService service;
@@ -21,23 +23,26 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody User user) {
-        return new ResponseEntity<>(service.save(user), HttpStatus.CREATED);
+    public ResponseEntity<User> create(@Valid @RequestBody User u) {
+        User savedUser = service.save(u);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Long id) {
-        return ResponseEntity.ok(service.get(id));
+        User user = service.get(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+        List<User> users = service.getAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.ok("User deleted successfully");
+        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
     }
+
 }
