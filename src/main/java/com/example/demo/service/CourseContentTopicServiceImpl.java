@@ -21,7 +21,6 @@ public class CourseContentTopicServiceImpl implements CourseContentTopicService 
         return repo.save(t);
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public CourseContentTopic get(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
@@ -32,7 +31,6 @@ public class CourseContentTopicServiceImpl implements CourseContentTopicService 
         return repo.findAll();
     }
 
-    // ❗ EXCEPTION ADDED HERE
     public void delete(Long id) {
 
         CourseContentTopic topic = repo.findById(id)
