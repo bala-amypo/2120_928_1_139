@@ -10,6 +10,7 @@ import com.example.demo.service.TransferEvaluationService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class TransferEvaluationServiceImpl implements TransferEvaluationService {
 
@@ -28,7 +29,8 @@ public class TransferEvaluationServiceImpl implements TransferEvaluationService 
         Course target = courseRepo.findById(targetCourseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
-        if (!source.isActive() || !target.isActive()) {
+        // ✅ Fixed here for Boolean active
+        if (!Boolean.TRUE.equals(source.getActive()) || !Boolean.TRUE.equals(target.getActive())) {
             throw new IllegalArgumentException("Course must be active");
         }
 
