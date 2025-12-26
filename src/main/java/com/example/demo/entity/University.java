@@ -6,10 +6,11 @@ import jakarta.persistence.*;
 public class University {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String name;
+
     private boolean active = true;
 
     public Long getId() { return id; }
