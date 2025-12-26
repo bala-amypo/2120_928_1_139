@@ -1,16 +1,15 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
+import com.example.demo.entity.Course;
+import com.example.demo.entity.University;
+import com.example.demo.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.Course;
-import com.example.demo.service.CourseService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class CourseController {
 
     private final CourseService service;
@@ -20,31 +19,25 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Course> create(@RequestBody Course course) {
-        return ResponseEntity.ok(service.createCourse(course));
+    public Course create(@RequestBody Course course) {
+        University u = new University();
+        u.setId(course.getUniversity().getId());
+        course.setUniversity(u);
+        return service.createCourse(course);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getCourseById(id));
+    public Course getById(@PathVariable Long id) {
+        return service.getCourseById(id);
     }
 
     @GetMapping("/university/{universityId}")
-    public ResponseEntity<List<Course>> getByUniversity(
-            @PathVariable Long universityId) {
-        return ResponseEntity.ok(service.getCoursesByUniversity(universityId));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Course> update(
-            @PathVariable Long id,
-            @RequestBody Course course) {
-        return ResponseEntity.ok(service.updateCourse(id, course));
+    public List<Course> getByUniversity(@PathVariable Long universityId) {
+        return service.getCoursesByUniversity(universityId);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deactivate(@PathVariable Long id) {
+    public void deactivate(@PathVariable Long id) {
         service.deactivateCourse(id);
-        return ResponseEntity.noContent().build();
     }
 }

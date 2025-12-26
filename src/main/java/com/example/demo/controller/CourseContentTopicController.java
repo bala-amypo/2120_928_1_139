@@ -1,16 +1,15 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.example.demo.entity.Course;
 import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.service.CourseContentTopicService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/topics")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class CourseContentTopicController {
 
     private final CourseContentTopicService service;
@@ -20,26 +19,20 @@ public class CourseContentTopicController {
     }
 
     @PostMapping
-    public ResponseEntity<CourseContentTopic> create(
-            @RequestBody CourseContentTopic topic) {
-        return ResponseEntity.ok(service.createTopic(topic));
+    public CourseContentTopic create(@RequestBody CourseContentTopic topic) {
+        Course c = new Course();
+        c.setId(topic.getCourse().getId());
+        topic.setCourse(c);
+        return service.createTopic(topic);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CourseContentTopic> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getTopicById(id));
+    public CourseContentTopic get(@PathVariable Long id) {
+        return service.getTopicById(id);
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<CourseContentTopic>> getByCourse(
-            @PathVariable Long courseId) {
-        return ResponseEntity.ok(service.getTopicsForCourse(courseId));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<CourseContentTopic> update(
-            @PathVariable Long id,
-            @RequestBody CourseContentTopic topic) {
-        return ResponseEntity.ok(service.updateTopic(id, topic));
+    public List<CourseContentTopic> getByCourse(@PathVariable Long courseId) {
+        return service.getTopicsForCourse(courseId);
     }
 }
