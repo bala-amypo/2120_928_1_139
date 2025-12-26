@@ -6,6 +6,7 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.TransferRuleService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service

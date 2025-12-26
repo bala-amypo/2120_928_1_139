@@ -4,6 +4,7 @@ import com.example.demo.entity.University;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.UniversityService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

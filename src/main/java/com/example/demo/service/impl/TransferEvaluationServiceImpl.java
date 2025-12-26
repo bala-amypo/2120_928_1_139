@@ -7,6 +7,7 @@ import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.TransferEvaluationResultRepository;
 import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.service.TransferEvaluationService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
