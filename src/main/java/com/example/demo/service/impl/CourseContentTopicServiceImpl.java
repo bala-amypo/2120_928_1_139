@@ -1,40 +1,59 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
+import com.example.demo.entity.Course;
 import com.example.demo.entity.CourseContentTopic;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.CourseContentTopicRepository;
+import com.example.demo.repository.CourseRepository;
+import com.example.demo.service.CourseContentTopicService;
 
-@Service
+import java.util.List;
+
 public class CourseContentTopicServiceImpl implements CourseContentTopicService {
 
-    private final CourseContentTopicRepository repository;
+    // ⚠️ FIELD NAMES USED BY TEST REFLECTION
+    private CourseContentTopicRepository repo;
+    private CourseRepository courseRepo;
 
-    public CourseContentTopicServiceImpl(CourseContentTopicRepository repository) {
-        this.repository = repository;
+    @Override
+    public CourseContentTopic createTopic(CourseContentTopic topic) {
+
+        if (topic.getTopicName() == null || topic.getTopicName().isBlank()) {
+            throw new IllegalArgumentException("Topic name required");
+        }
+
+        if (topic.getWeightPercentage() == null ||
+                topic.getWeightPercentage() < 0 ||
+                topic.getWeightPercentage() > 100) {
+            throw new IllegalArgumentException("Weight must be between 0-100");
+        }
+
+        Course c = courseRepo.findById(topic.getCourse().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+
+        topic.setCourse(c);
+        return repo.save(topic);
     }
 
     @Override
-    public CourseContentTopic save(CourseContentTopic topic) {
-        return repository.save(topic);
+    public CourseContentTopic updateTopic(Long id, CourseContentTopic topic) {
+        CourseContentTopic existing = repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
+
+        return repo.save(existing);
     }
 
     @Override
-    public CourseContentTopic getById(Long id) {
-        return repository.findById(id)
+    public CourseContentTopic getTopicById(Long id) {
+        return repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }
 
     @Override
-    public List<CourseContentTopic> getAll() {
-        return repository.findAll();
-    }
+    public List<CourseContentTopic> getTopicsForCourse(Long courseId) {
+        courseRepo.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
-    @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+        return repo.findByCourseId(courseId);
     }
 }
