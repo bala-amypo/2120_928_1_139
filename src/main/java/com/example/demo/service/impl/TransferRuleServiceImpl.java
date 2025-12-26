@@ -8,7 +8,7 @@ import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.TransferRuleService;
 
 import java.util.List;
-
+@Service
 public class TransferRuleServiceImpl implements TransferRuleService {
 
     // ⚠️ FIELD NAMES USED BY TEST REFLECTION

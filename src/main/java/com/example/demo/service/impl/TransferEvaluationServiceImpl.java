@@ -9,7 +9,7 @@ import com.example.demo.repository.TransferRuleRepository;
 import com.example.demo.service.TransferEvaluationService;
 
 import java.util.List;
-
+@Service
 public class TransferEvaluationServiceImpl implements TransferEvaluationService {
 
     // ⚠️ FIELD NAMES USED BY REFLECTION

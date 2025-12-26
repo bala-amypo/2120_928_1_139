@@ -7,7 +7,7 @@ import com.example.demo.service.UniversityService;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class UniversityServiceImpl implements UniversityService {
 
     // ⚠️ FIELD NAME USED BY REFLECTION IN TEST
