@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class University {
@@ -11,14 +9,8 @@ public class University {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "University name is required")
     private String name;
-
-    @NotBlank(message = "Country is required")
-    private String country;
-
-    @NotNull(message = "Active status must be provided")
-    private Boolean active = true;
+    private boolean active = true;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -26,9 +18,6 @@ public class University {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getCountry() { return country; }
-    public void setCountry(String country) { this.country = country; }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }
