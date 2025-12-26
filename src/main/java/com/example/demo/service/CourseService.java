@@ -8,11 +8,7 @@ public interface CourseService {
 
     Course createCourse(Course course);
 
-    Course updateCourse(Long id, Course course);
-
     Course getCourseById(Long id);
-
-    void deactivateCourse(Long id);
 
     List<Course> getCoursesByUniversity(Long universityId);
 }

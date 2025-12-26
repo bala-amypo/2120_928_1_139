@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Course;
-import com.example.demo.entity.University;
 import com.example.demo.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +19,6 @@ public class CourseController {
 
     @PostMapping
     public Course create(@RequestBody Course course) {
-        University u = new University();
-        u.setId(course.getUniversity().getId());
-        course.setUniversity(u);
         return service.createCourse(course);
     }
 
@@ -34,10 +30,5 @@ public class CourseController {
     @GetMapping("/university/{universityId}")
     public List<Course> getByUniversity(@PathVariable Long universityId) {
         return service.getCoursesByUniversity(universityId);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deactivate(@PathVariable Long id) {
-        service.deactivateCourse(id);
     }
 }
