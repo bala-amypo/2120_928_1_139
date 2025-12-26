@@ -1,36 +1,26 @@
-package com.example.demo.controller;
+package com.example.demo.dto;
 
-import java.util.Optional;
+public class AuthResponse {
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+    private String token;
+    private String email;
+    private String role;
 
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
-
-@RestController
-@RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
-public class UserController {
-
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public AuthResponse(String token, String email, String role) {
+        this.token = token;
+        this.email = email;
+        this.role = role;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        return ResponseEntity.ok(userRepository.save(user));
+    public String getToken() {
+        return token;
     }
 
-    @GetMapping("/email/{email}")
-    public ResponseEntity<User> getByEmail(@PathVariable String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user.map(ResponseEntity::ok)
-                   .orElse(ResponseEntity.notFound().build());
+    public String getEmail() {
+        return email;
+    }
+
+    public String getRole() {
+        return role;
     }
 }
