@@ -13,9 +13,15 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseRepository courseRepo;
-    private final UniversityRepository universityRepo;
+    // ⚠️ FIELD NAMES MUST MATCH TEST REFLECTION
+    private CourseRepository courseRepo;
+    private UniversityRepository universityRepo;
 
+    // ✅ REQUIRED BY TESTS
+    public CourseServiceImpl() {
+    }
+
+    // ✅ REQUIRED BY SPRING
     public CourseServiceImpl(
             CourseRepository courseRepo,
             UniversityRepository universityRepo) {
@@ -38,6 +44,8 @@ public class CourseServiceImpl implements CourseService {
                 .orElseThrow(() -> new ResourceNotFoundException("University not found"));
 
         course.setUniversity(uni);
+        course.setActive(true);
+
         return courseRepo.save(course);
     }
 
@@ -49,11 +57,32 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCoursesByUniversity(Long universityId) {
-
         universityRepo.findById(universityId)
                 .orElseThrow(() -> new ResourceNotFoundException("University not found"));
 
-        // ✅ FIXED LINE
         return courseRepo.findByUniversityIdAndActiveTrue(universityId);
+    }
+
+    // ✅ REQUIRED BY TEST
+    public Course deactivateCourse(long id) {
+        Course course = getCourseById(id);
+        course.setActive(false);
+        return courseRepo.save(course);
+    }
+
+    // ✅ REQUIRED BY TEST
+    public Course updateCourse(long id, Course updated) {
+
+        Course existing = getCourseById(id);
+
+        if (updated.getCourseName() != null) {
+            existing.setCourseName(updated.getCourseName());
+        }
+
+        if (updated.getCreditHours() != null) {
+            existing.setCreditHours(updated.getCreditHours());
+        }
+
+        return courseRepo.save(existing);
     }
 }
