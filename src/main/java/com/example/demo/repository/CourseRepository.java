@@ -1,6 +1,4 @@
-package com.example.demo.repository;
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.demo.entity.*;
-
-
-public interface CourseRepository extends JpaRepository<Course, Long> {}
+public interface CourseRepository extends JpaRepository<Course, Long> {
+    Optional<Course> findByUniversityIdAndCourseCode(Long id, String code);
+    List<Course> findByUniversityIdAndActiveTrue(Long id);
+}
