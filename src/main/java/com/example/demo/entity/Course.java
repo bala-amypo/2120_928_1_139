@@ -3,35 +3,73 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "courses",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"university_id", "courseCode"}))
 public class Course {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String courseCode;
+
     private String courseName;
+
     private int creditHours;
+
     private boolean active = true;
 
     @ManyToOne
+    @JoinColumn(name = "university_id")
     private University university;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // ===== Getters & Setters =====
 
-    public String getCourseCode() { return courseCode; }
-    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getCourseName() { return courseName; }
-    public void setCourseName(String courseName) { this.courseName = courseName; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public int getCreditHours() { return creditHours; }
-    public void setCreditHours(int creditHours) { this.creditHours = creditHours; }
+    public String getCourseCode() {
+        return courseCode;
+    }
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
 
-    public University getUniversity() { return university; }
-    public void setUniversity(University university) { this.university = university; }
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public int getCreditHours() {
+        return creditHours;
+    }
+
+    public void setCreditHours(int creditHours) {
+        this.creditHours = creditHours;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
 }
