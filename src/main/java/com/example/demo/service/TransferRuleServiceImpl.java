@@ -11,33 +11,25 @@ import com.example.demo.repository.TransferRuleRepository;
 @Service
 public class TransferRuleServiceImpl implements TransferRuleService {
 
-    private final TransferRuleRepository repo;
+    private final TransferRuleRepository repository;
 
-    public TransferRuleServiceImpl(TransferRuleRepository repo) {
-        this.repo = repo;
+    public TransferRuleServiceImpl(TransferRuleRepository repository) {
+        this.repository = repository;
     }
 
-    public TransferRule save(TransferRule r) {
-        return repo.save(r);
+    @Override
+    public TransferRule save(TransferRule rule) {
+        return repository.save(rule);
     }
 
-  
-    public TransferRule get(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("TransferRule not found with id " + id));
+    @Override
+    public TransferRule getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
     }
 
+    @Override
     public List<TransferRule> getAll() {
-        return repo.findAll();
-    }
-
-    public void delete(Long id) {
-
-        TransferRule rule = repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("TransferRule not found with id " + id));
-
-        repo.delete(rule);
+        return repository.findAll();
     }
 }

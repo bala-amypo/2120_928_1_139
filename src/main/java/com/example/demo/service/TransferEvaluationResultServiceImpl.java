@@ -9,34 +9,29 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.TransferEvaluationResultRepository;
 
 @Service
-public class TransferEvaluationResultServiceImpl implements TransferEvaluationResultService {
+public class TransferEvaluationResultServiceImpl
+        implements TransferEvaluationResultService {
 
-    private final TransferEvaluationResultRepository repo;
+    private final TransferEvaluationResultRepository repository;
 
-    public TransferEvaluationResultServiceImpl(TransferEvaluationResultRepository repo) {
-        this.repo = repo;
+    public TransferEvaluationResultServiceImpl(
+            TransferEvaluationResultRepository repository) {
+        this.repository = repository;
     }
 
-    public TransferEvaluationResult save(TransferEvaluationResult r) {
-        return repo.save(r);
+    @Override
+    public TransferEvaluationResult save(TransferEvaluationResult result) {
+        return repository.save(result);
     }
 
-    public TransferEvaluationResult get(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("TransferEvaluationResult not found with id " + id));
+    @Override
+    public TransferEvaluationResult getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Result not found"));
     }
 
+    @Override
     public List<TransferEvaluationResult> getAll() {
-        return repo.findAll();
-    }
-
-    public void delete(Long id) {
-
-        TransferEvaluationResult result = repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("TransferEvaluationResult not found with id " + id));
-
-        repo.delete(result);
+        return repository.findAll();
     }
 }

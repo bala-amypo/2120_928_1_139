@@ -11,32 +11,30 @@ import com.example.demo.repository.CourseContentTopicRepository;
 @Service
 public class CourseContentTopicServiceImpl implements CourseContentTopicService {
 
-    private final CourseContentTopicRepository repo;
+    private final CourseContentTopicRepository repository;
 
-    public CourseContentTopicServiceImpl(CourseContentTopicRepository repo) {
-        this.repo = repo;
+    public CourseContentTopicServiceImpl(CourseContentTopicRepository repository) {
+        this.repository = repository;
     }
 
-    public CourseContentTopic save(CourseContentTopic t) {
-        return repo.save(t);
+    @Override
+    public CourseContentTopic save(CourseContentTopic topic) {
+        return repository.save(topic);
     }
 
-    public CourseContentTopic get(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("CourseContentTopic not found with id " + id));
+    @Override
+    public CourseContentTopic getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Topic not found"));
     }
 
+    @Override
     public List<CourseContentTopic> getAll() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
+    @Override
     public void delete(Long id) {
-
-        CourseContentTopic topic = repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("CourseContentTopic not found with id " + id));
-
-        repo.delete(topic);
+        repository.deleteById(id);
     }
 }

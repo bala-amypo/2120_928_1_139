@@ -11,32 +11,30 @@ import com.example.demo.repository.CourseRepository;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    private final CourseRepository repo;
+    private final CourseRepository repository;
 
-    public CourseServiceImpl(CourseRepository repo) {
-        this.repo = repo;
+    public CourseServiceImpl(CourseRepository repository) {
+        this.repository = repository;
     }
 
-    public Course save(Course c) {
-        return repo.save(c);
+    @Override
+    public Course save(Course course) {
+        return repository.save(course);
     }
 
-    public Course get(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("Course not found with id " + id));
+    @Override
+    public Course getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
     }
 
+    @Override
     public List<Course> getAll() {
-        return repo.findAll();
+        return repository.findAll();
     }
 
+    @Override
     public void delete(Long id) {
-
-        Course course = repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("Course not found with id " + id));
-
-        repo.delete(course);
+        repository.deleteById(id);
     }
 }
