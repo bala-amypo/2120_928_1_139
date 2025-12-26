@@ -13,10 +13,9 @@ public class University {
     @Column(unique = true, nullable = false)
     private String name;
 
-    private boolean active = true;
+    private Boolean active = true; // changed from boolean to Boolean
 
     // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
     }
@@ -33,11 +32,11 @@ public class University {
         this.name = name;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }

@@ -13,15 +13,12 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    // ⚠️ FIELD NAMES MUST MATCH TEST REFLECTION
     private CourseRepository courseRepo;
     private UniversityRepository universityRepo;
 
-    // ✅ REQUIRED BY TESTS
     public CourseServiceImpl() {
     }
 
-    // ✅ REQUIRED BY SPRING
     public CourseServiceImpl(
             CourseRepository courseRepo,
             UniversityRepository universityRepo) {
@@ -63,14 +60,12 @@ public class CourseServiceImpl implements CourseService {
         return courseRepo.findByUniversityIdAndActiveTrue(universityId);
     }
 
-    // ✅ REQUIRED BY TEST
     public Course deactivateCourse(long id) {
         Course course = getCourseById(id);
         course.setActive(false);
         return courseRepo.save(course);
     }
 
-    // ✅ REQUIRED BY TEST
     public Course updateCourse(long id, Course updated) {
 
         Course existing = getCourseById(id);

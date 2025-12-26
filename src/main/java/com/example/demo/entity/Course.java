@@ -15,16 +15,15 @@ public class Course {
 
     private String courseName;
 
-    private int creditHours;
+    private Integer creditHours; // changed from int to Integer
 
-    private boolean active = true;
+    private Boolean active = true; // changed from boolean to Boolean
 
     @ManyToOne
-    @JoinColumn(name = "university_id")
+    @JoinColumn(name = "university_id", nullable = false)
     private University university;
 
     // ===== Getters & Setters =====
-
     public Long getId() {
         return id;
     }
@@ -49,19 +48,19 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public int getCreditHours() {
+    public Integer getCreditHours() {
         return creditHours;
     }
 
-    public void setCreditHours(int creditHours) {
+    public void setCreditHours(Integer creditHours) {
         this.creditHours = creditHours;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
