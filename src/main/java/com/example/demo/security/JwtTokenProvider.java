@@ -2,15 +2,18 @@ package com.example.demo.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;   // ⭐ REQUIRED
 
 import java.security.Key;
 import java.util.Date;
 import java.util.Set;
 
+@Component   // ⭐ THIS MAKES IT A SPRING BEAN
 public class JwtTokenProvider {
 
     // Secret key (fixed for tests)
-    private static final String SECRET = "secret-key-for-tests-secret-key-for-tests";
+    private static final String SECRET =
+            "secret-key-for-tests-secret-key-for-tests";
 
     private static final long EXPIRATION = 3600000; // 1 hour
 
