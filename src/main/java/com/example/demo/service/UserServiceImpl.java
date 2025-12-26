@@ -11,32 +11,25 @@ import com.example.demo.repository.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repo;
+    private final UserRepository repository;
 
-    public UserServiceImpl(UserRepository repo) {
-        this.repo = repo;
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
     }
 
-    public User save(User u) {
-        return repo.save(u);
+    @Override
+    public User save(User user) {
+        return repository.save(user);
     }
 
-    public User get(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("User not found with id " + id));
+    @Override
+    public User getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
+    @Override
     public List<User> getAll() {
-        return repo.findAll();
-    }
-
-    public void delete(Long id) {
-
-        User user = repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("User not found with id " + id));
-
-        repo.delete(user);
+        return repository.findAll();
     }
 }

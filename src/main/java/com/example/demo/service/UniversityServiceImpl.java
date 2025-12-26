@@ -11,33 +11,25 @@ import com.example.demo.repository.UniversityRepository;
 @Service
 public class UniversityServiceImpl implements UniversityService {
 
-    private final UniversityRepository repo;
+    private final UniversityRepository repository;
 
-    public UniversityServiceImpl(UniversityRepository repo) {
-        this.repo = repo;
+    public UniversityServiceImpl(UniversityRepository repository) {
+        this.repository = repository;
     }
 
-    public University save(University u) {
-        return repo.save(u);
+    @Override
+    public University save(University university) {
+        return repository.save(university);
     }
 
-  
-    public University get(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("University not found with id " + id));
+    @Override
+    public University getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
     }
 
+    @Override
     public List<University> getAll() {
-        return repo.findAll();
-    }
-
-    public void delete(Long id) {
-
-        University university = repo.findById(id)
-                .orElseThrow(() ->
-                    new ResourceNotFoundException("University not found with id " + id));
-
-        repo.delete(university);
+        return repository.findAll();
     }
 }
