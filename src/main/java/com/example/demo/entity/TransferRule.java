@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class TransferRule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
