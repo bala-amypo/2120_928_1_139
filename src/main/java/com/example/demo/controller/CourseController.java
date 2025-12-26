@@ -1,46 +1,50 @@
 package com.example.demo.controller;
 
-
-import jakarta.validation.Valid;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.example.demo.entity.Course;
 import com.example.demo.service.CourseService;
 
-
 @RestController
 @RequestMapping("/api/courses")
+@CrossOrigin(origins = "*")
 public class CourseController {
 
+    private final CourseService service;
 
-private final CourseService service;
+    public CourseController(CourseService service) {
+        this.service = service;
+    }
 
+    @PostMapping
+    public ResponseEntity<Course> create(@RequestBody Course course) {
+        return ResponseEntity.ok(service.createCourse(course));
+    }
 
-public CourseController(CourseService service) {
-this.service = service;
-}
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getCourseById(id));
+    }
 
+    @GetMapping("/university/{universityId}")
+    public ResponseEntity<List<Course>> getByUniversity(
+            @PathVariable Long universityId) {
+        return ResponseEntity.ok(service.getCoursesByUniversity(universityId));
+    }
 
-@PostMapping
-public Course create(@Valid @RequestBody Course c) {
-return service.save(c);
-}
+    @PutMapping("/{id}")
+    public ResponseEntity<Course> update(
+            @PathVariable Long id,
+            @RequestBody Course course) {
+        return ResponseEntity.ok(service.updateCourse(id, course));
+    }
 
-
-@GetMapping("/{id}")
-public Course get(@PathVariable Long id) {
-return service.get(id);
-}
-
-
-@GetMapping
-public List<Course> getAll() {
-return service.getAll();
-}
-
-
-@DeleteMapping("/{id}")
-public void delete(@PathVariable Long id) {
-service.delete(id);
-}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deactivate(@PathVariable Long id) {
+        service.deactivateCourse(id);
+        return ResponseEntity.noContent().build();
+    }
 }

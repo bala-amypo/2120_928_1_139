@@ -1,48 +1,36 @@
 package com.example.demo.controller;
 
-import jakarta.validation.Valid;
-import java.util.List;
+import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*") 
+@CrossOrigin(origins = "*")
 public class UserController {
 
-    private final UserService service;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody User u) {
-        User savedUser = service.save(u);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@RequestBody User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        return ResponseEntity.ok(userRepository.save(user));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable Long id) {
-        User user = service.get(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> getByEmail(@PathVariable String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.map(ResponseEntity::ok)
+                   .orElse(ResponseEntity.notFound().build());
     }
-
-    @GetMapping
-    public ResponseEntity<List<User>> getAll() {
-        List<User> users = service.getAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        service.delete(id);
-        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
-    }
-
 }
