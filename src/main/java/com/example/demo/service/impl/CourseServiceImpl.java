@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // ⭐ REQUIRED
+@Service
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepo;
@@ -53,6 +53,7 @@ public class CourseServiceImpl implements CourseService {
         universityRepo.findById(universityId)
                 .orElseThrow(() -> new ResourceNotFoundException("University not found"));
 
-        return courseRepo.findByUniversityId(universityId);
+        // ✅ FIXED LINE
+        return courseRepo.findByUniversityIdAndActiveTrue(universityId);
     }
 }
