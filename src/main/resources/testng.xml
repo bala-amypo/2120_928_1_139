@@ -147,3 +147,6 @@
     </test>
     
 </suite>
+# Create the standard Maven test directory structure
+mkdir -p src/test/java/com/example/demo
+mkdir -p src/test/resources
