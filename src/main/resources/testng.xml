@@ -147,4 +147,3 @@
     </test>
     
 </suite>
-cp -r test/java/com/example/demo/* src/test/java/com/example/demo/
