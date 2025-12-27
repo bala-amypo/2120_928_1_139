@@ -13,9 +13,11 @@ public class University {
     @Column(unique = true, nullable = false)
     private String name;
 
-    private Boolean active = true; // changed from boolean to Boolean
+    // Boolean (not primitive) required
+    private Boolean active = true;
 
     // ===== Getters & Setters =====
+
     public Long getId() {
         return id;
     }
@@ -38,5 +40,10 @@ public class University {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    // ⭐ REQUIRED BY TESTS
+    public boolean isActive() {
+        return Boolean.TRUE.equals(active);
     }
 }

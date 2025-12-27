@@ -3,8 +3,12 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courses",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"university_id", "courseCode"}))
+@Table(
+        name = "courses",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"university_id", "courseCode"}
+        )
+)
 public class Course {
 
     @Id
@@ -15,15 +19,17 @@ public class Course {
 
     private String courseName;
 
-    private Integer creditHours; // changed from int to Integer
+    private Integer creditHours;
 
-    private Boolean active = true; // changed from boolean to Boolean
+    // Boolean required for tests + DB
+    private Boolean active = true;
 
     @ManyToOne
     @JoinColumn(name = "university_id", nullable = false)
     private University university;
 
     // ===== Getters & Setters =====
+
     public Long getId() {
         return id;
     }
@@ -62,6 +68,11 @@ public class Course {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    // ⭐ REQUIRED BY TESTS
+    public boolean isActive() {
+        return Boolean.TRUE.equals(active);
     }
 
     public University getUniversity() {
