@@ -5,3 +5,5 @@
     </listeners>
     <!-- Your test configurations -->
 </suite>
+
+ls -la testng.xml
