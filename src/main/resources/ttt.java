@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TransferCreditSystemTestSuite" parallel="false">
+    
+    <test name="CRUDTests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="crud" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.demo.FullProjectTest" />
+        </classes>
+    </test>
+    
+    <test name="SecurityTests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="security" />
+                <include name="auth" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.demo.FullProjectTest" />
+        </classes>
+    </test>
+    
+    <test name="IntegrationTests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="evaluation" />
+                <include name="topics" />
+                <include name="rules" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.demo.FullProjectTest" />
+        </classes>
+    </test>
+    
+    <test name="FrameworkTests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="servlet" />
+                <include name="di" />
+                <include name="hibernate" />
+                <include name="jpa" />
+                <include name="relations" />
+                <include name="hql" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.demo.FullProjectTest" />
+        </classes>
+    </test>
+    
+    <test name="EdgeCaseTests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="edge" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.demo.FullProjectTest" />
+        </classes>
+    </test>
+    
+    <test name="FinalTests" preserve-order="true">
+        <groups>
+            <run>
+                <include name="final" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.example.demo.FullProjectTest" />
+        </classes>
+    </test>
+    
+    <!-- Run all tests in order of priority (1-60) -->
+    <test name="AllTestsInOrder" preserve-order="true">
+        <classes>
+            <class name="com.example.demo.FullProjectTest">
+                <methods>
+                    <include name="test01ServletDeploymentConfig" />
+                    <include name="test02CreateUniversitySuccess" />
+                    <include name="test03CreateUniversityDuplicate" />
+                    <include name="test04UpdateUniversity" />
+                    <include name="test05GetUniversityNotFound" />
+                    <include name="test06CreateCourseInvalidCredit" />
+                    <include name="test07CreateCourseSuccess" />
+                    <include name="test08DeactivateCourse" />
+                    <include name="test09DIServiceAvailability" />
+                    <include name="test10EntityAnnotations" />
+                    <include name="test11JPAMapping" />
+                    <include name="test12ManyToManyPlaceholder" />
+                    <include name="test13JwtCreateAndValidate" />
+                    <include name="test14PasswordEncoding" />
+                    <include name="test15HqlQueryPlaceholder" />
+                    <include name="test16CreateTopicValidation" />
+                    <include name="test17CreateTopicSuccess" />
+                    <include name="test18CreateRuleInvalidOverlap" />
+                    <include name="test19CreateRuleSuccess" />
+                    <include name="test20EvaluateNoRule" />
+                    <include name="test21EvaluateEligibleRule" />
+                    <include name="test22EvaluateCreditToleranceFail" />
+                    <include name="test23UpdateCourseNotFound" />
+                    <include name="test24GetCourseById" />
+                    <include name="test25GetTopicsForCourse" />
+                    <include name="test26GetRulesPair" />
+                    <include name="test27DeactivateRule" />
+                    <include name="test28RegisterAndLogin" />
+                    <include name="test29JwtContainsClaims" />
+                    <include name="test30RepoNegativeFind" />
+                    <include name="test31CreateUniversityInvalidName" />
+                    <include name="test32DeactivateUniversity" />
+                    <include name="test33TopicWeightBounds" />
+                    <include name="test34RuleCreditToleranceNegative" />
+                    <include name="test35EvaluationDefaultSourceWeight" />
+                    <include name="test36RegisterExistingEmailFails" />
+                    <include name="test37CoursesByUniversity" />
+                    <include name="test38TopicUpdate" />
+                    <include name="test39GetRuleByIdNotFound" />
+                    <include name="test40GetEvaluationByIdNotFound" />
+                    <include name="test41ListEvaluationsForCourse" />
+                    <include name="test42JwtInvalid" />
+                    <include name="test43RepoMethodExists" />
+                    <include name="test44DuplicateCourseCode" />
+                    <include name="test45TopicGetById" />
+                    <include name="test46DeactivateUniversityNotFound" />
+                    <include name="test47PasswordEncoderConsistent" />
+                    <include name="test48QueryPlaceholder2" />
+                    <include name="test49EvaluationCourseInactive" />
+                    <include name="test50UpdateTopicNotFound" />
+                    <include name="test51UserRepoExists" />
+                    <include name="test52UpdateRuleNotFound" />
+                    <include name="test53EvaluateNumericStability" />
+                    <include name="test54CourseRepoFindByCodeNullUniversity" />
+                    <include name="test55CreateAndGetCourseFlow" />
+                    <include name="test56CreateMultipleTopicsSumWeights" />
+                    <include name="test57CreateRuleNullTolerance" />
+                    <include name="test58EvaluatePartialMatch" />
+                    <include name="test59FinalSanity" />
+                    <include name="test60FinalPlaceholder" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+</suite>
