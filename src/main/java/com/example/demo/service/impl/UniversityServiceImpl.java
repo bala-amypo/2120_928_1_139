@@ -1,64 +1,50 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.University;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.UniversityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Objects;
 
-import java.util.List;
-import java.util.Optional;
 @Service
 public class UniversityServiceImpl implements UniversityService {
-
-    // ⚠️ FIELD NAME USED BY REFLECTION IN TEST
+    @Autowired
     private UniversityRepository repository;
 
     @Override
     public University createUniversity(University university) {
-
-        if (university == null || university.getName() == null || university.getName().isBlank()) {
+        if (university.getName() == null || university.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Name required");
         }
-
-        Optional<University> existing = repository.findByName(university.getName());
-        if (existing.isPresent()) {
-            throw new IllegalArgumentException("University already exists");
+        if (repository.findByName(university.getName()).isPresent()) {
+            throw new IllegalArgumentException("University with this name already exists");
         }
-
-        university.setActive(true);
         return repository.save(university);
     }
 
     @Override
     public University updateUniversity(Long id, University university) {
+        Objects.requireNonNull(id, "ID cannot be null");
         University existing = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
-
-        if (university.getName() != null) {
-            existing.setName(university.getName());
-        }
-
+                .orElseThrow(() -> new RuntimeException("University not found"));
+        existing.setName(university.getName());
         return repository.save(existing);
     }
 
     @Override
     public University getUniversityById(Long id) {
+        Objects.requireNonNull(id, "ID cannot be null");
         return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
+                .orElseThrow(() -> new RuntimeException("University not found"));
     }
 
     @Override
     public void deactivateUniversity(Long id) {
-        University u = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
-
-        u.setActive(false);
-        repository.save(u);
-    }
-
-    @Override
-    public List<University> getAll() {
-        return repository.findAll();
+        Objects.requireNonNull(id, "ID cannot be null");
+        University university = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("University not found"));
+        university.setActive(false);
+        repository.save(university);
     }
 }
