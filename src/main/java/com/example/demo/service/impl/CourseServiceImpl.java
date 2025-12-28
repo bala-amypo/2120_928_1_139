@@ -1,83 +1,66 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Course;
-import com.example.demo.entity.University;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.UniversityRepository;
 import com.example.demo.service.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-
-    private CourseRepository courseRepo;
-    private UniversityRepository universityRepo;
-
-    public CourseServiceImpl() {
-    }
-
-    public CourseServiceImpl(
-            CourseRepository courseRepo,
-            UniversityRepository universityRepo) {
-        this.courseRepo = courseRepo;
-        this.universityRepo = universityRepo;
-    }
+    @Autowired
+    private CourseRepository repo;
+    @Autowired
+    private UniversityRepository univRepo;
 
     @Override
     public Course createCourse(Course course) {
-
-        if (course.getCourseCode() == null || course.getCourseCode().isBlank()) {
-            throw new IllegalArgumentException("Course code required");
+        if (course.getCreditHours() <= 0) {
+            throw new IllegalArgumentException("Credit hours must be > 0");
         }
-
-        if (course.getCourseName() == null || course.getCourseName().isBlank()) {
-            throw new IllegalArgumentException("Course name required");
+        if (course.getUniversity() != null) {
+            Long uId = course.getUniversity().getId();
+            if (uId != null) {
+                univRepo.findById(uId).orElseThrow(() -> new RuntimeException("University not found"));
+                if (repo.findByUniversityIdAndCourseCode(uId, course.getCourseCode()).isPresent()) {
+                    throw new IllegalArgumentException("Course code already exists");
+                }
+            }
         }
+        return repo.save(course);
+    }
 
-        University uni = universityRepo.findById(course.getUniversity().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
-
-        course.setUniversity(uni);
-        course.setActive(true);
-
-        return courseRepo.save(course);
+    @Override
+    public Course updateCourse(Long id, Course course) {
+        Objects.requireNonNull(id, "ID cannot be null");
+        Course existing = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+        existing.setCourseName(course.getCourseName());
+        existing.setCreditHours(course.getCreditHours());
+        return repo.save(existing);
     }
 
     @Override
     public Course getCourseById(Long id) {
-        return courseRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+        Objects.requireNonNull(id, "ID cannot be null");
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+    }
+
+    @Override
+    public void deactivateCourse(Long id) {
+        Objects.requireNonNull(id, "ID cannot be null");
+        Course course = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+        course.setActive(false);
+        repo.save(course);
     }
 
     @Override
     public List<Course> getCoursesByUniversity(Long universityId) {
-        universityRepo.findById(universityId)
-                .orElseThrow(() -> new ResourceNotFoundException("University not found"));
-
-        return courseRepo.findByUniversityIdAndActiveTrue(universityId);
-    }
-
-    public Course deactivateCourse(long id) {
-        Course course = getCourseById(id);
-        course.setActive(false);
-        return courseRepo.save(course);
-    }
-
-    public Course updateCourse(long id, Course updated) {
-
-        Course existing = getCourseById(id);
-
-        if (updated.getCourseName() != null) {
-            existing.setCourseName(updated.getCourseName());
-        }
-
-        if (updated.getCreditHours() != null) {
-            existing.setCreditHours(updated.getCreditHours());
-        }
-
-        return courseRepo.save(existing);
+        return repo.findByUniversityIdAndActiveTrue(universityId);
     }
 }
