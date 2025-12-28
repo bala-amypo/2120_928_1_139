@@ -2,34 +2,29 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.TransferEvaluationResult;
 import com.example.demo.service.TransferEvaluationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/evaluations")
-@CrossOrigin
+@RequestMapping("/api/transfer-evaluations")
 public class TransferEvaluationController {
-
-    private final TransferEvaluationService service;
-
-    public TransferEvaluationController(TransferEvaluationService service) {
-        this.service = service;
+    
+    @Autowired
+    private TransferEvaluationService evaluationService;
+    
+    @PostMapping("/evaluate/{sourceCourseId}/{targetCourseId}")
+    public TransferEvaluationResult evaluate(@PathVariable Long sourceCourseId, @PathVariable Long targetCourseId) {
+        return evaluationService.evaluateTransfer(sourceCourseId, targetCourseId);
     }
-
-    @PostMapping
-    public TransferEvaluationResult evaluate(@RequestParam Long sourceCourseId,
-                                             @RequestParam Long targetCourseId) {
-        return service.evaluateTransfer(sourceCourseId, targetCourseId);
-    }
-
+    
     @GetMapping("/{id}")
-    public TransferEvaluationResult get(@PathVariable Long id) {
-        return service.getEvaluationById(id);
+    public TransferEvaluationResult getById(@PathVariable Long id) {
+        return evaluationService.getEvaluationById(id);
     }
-
+    
     @GetMapping("/course/{courseId}")
     public List<TransferEvaluationResult> getByCourse(@PathVariable Long courseId) {
-        return service.getEvaluationsForCourse(courseId);
+        return evaluationService.getEvaluationsForCourse(courseId);
     }
 }

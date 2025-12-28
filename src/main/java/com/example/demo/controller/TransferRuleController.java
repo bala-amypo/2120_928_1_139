@@ -1,45 +1,40 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.TransferRule;
-import com.example.demo.entity.University;
 import com.example.demo.service.TransferRuleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rules")
-@CrossOrigin
+@RequestMapping("/api/transfer-rules")
 public class TransferRuleController {
-
-    private final TransferRuleService service;
-
-    public TransferRuleController(TransferRuleService service) {
-        this.service = service;
-    }
-
+    
+    @Autowired
+    private TransferRuleService ruleService;
+    
     @PostMapping
     public TransferRule create(@RequestBody TransferRule rule) {
-        University src = new University();
-        src.setId(rule.getSourceUniversity().getId());
-
-        University tgt = new University();
-        tgt.setId(rule.getTargetUniversity().getId());
-
-        rule.setSourceUniversity(src);
-        rule.setTargetUniversity(tgt);
-
-        return service.createRule(rule);
+        return ruleService.createRule(rule);
     }
-
+    
+    @PutMapping("/{id}")
+    public TransferRule update(@PathVariable Long id, @RequestBody TransferRule rule) {
+        return ruleService.updateRule(id, rule);
+    }
+    
     @GetMapping("/{id}")
-    public TransferRule get(@PathVariable Long id) {
-        return service.getRuleById(id);
+    public TransferRule getById(@PathVariable Long id) {
+        return ruleService.getRuleById(id);
     }
-
-    @GetMapping("/{sourceId}/{targetId}")
-    public List<TransferRule> getRules(@PathVariable Long sourceId,
-                                       @PathVariable Long targetId) {
-        return service.getRulesForUniversities(sourceId, targetId);
+    
+    @GetMapping("/pair/{sourceId}/{targetId}")
+    public List<TransferRule> getRulesPair(@PathVariable Long sourceId, @PathVariable Long targetId) {
+        return ruleService.getRulesForUniversities(sourceId, targetId);
+    }
+    
+    @PutMapping("/{id}/deactivate")
+    public void deactivate(@PathVariable Long id) {
+        ruleService.deactivateRule(id);
     }
 }
